@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+database.db
+
+# User Uploads and Processed Output (Keep directory structure via .gitkeep)
+uploads_bruts/*
+!uploads_bruts/.gitkeep
+catalogue_final/*
+!catalogue_final/.gitkeep
+
+# macOS & OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build plan & temp logs
+_build_plan/
+*.log
+
+# IDE & Editor Configs
+.idea/
+.vscode/
+*.swp
+*.swo
