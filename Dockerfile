@@ -17,14 +17,11 @@ WORKDIR /app
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Copy dependency definitions
-COPY pyproject.toml uv.lock ./
+# Copy full application code so hatchling package build succeeds
+COPY . .
 
 # Install production dependencies
-RUN uv sync --frozen --no-dev
-
-# Copy application source code
-COPY . .
+RUN uv sync --no-dev
 
 # Ensure storage directories exist
 RUN mkdir -p uploads_bruts catalogue_final
@@ -34,3 +31,4 @@ EXPOSE 8000
 
 # Start server using PORT env provided by Render
 CMD ["sh", "-c", "uv run uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+
