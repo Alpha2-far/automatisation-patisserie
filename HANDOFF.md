@@ -1,9 +1,10 @@
 # Document de Passation (Handoff) — Pâtisserie Studio
 
 > **Application** : Pâtisserie Studio — Catalogue Automatique  
-> **Version** : 1.1.0 (Production-Ready avec Détection Automatique de Prix)  
+> **Version** : 1.2.0 (Maintenance Complète, Tests Automatisés & Cartographie Graphify)  
 > **Auteur / Équipe** : Antigravity AI (Google DeepMind Agentic Coding)  
-> **Date de passation** : 22 Juillet 2026  
+> **Dernière Maintenance** : 29 Septembre 2026  
+
 
 ---
 

@@ -98,6 +98,38 @@ Accédez à l'application dans votre navigateur :
 
 ---
 
+## 🧪 Tests Automatisés
+
+Le projet intègre une suite de tests unitaires et d'intégration validant l'ensemble de la logique métier, de la base de données et des routes d'API :
+
+```bash
+uv run pytest -v
+```
+
+Les tests couvrent :
+- **Base de données & Prix** : normalisation des slugs, extraction regex des prix (FCFA/francs), intégrité relationnelle et nettoyage de répertoire sur disque.
+- **Service Excel** : initialisation avec en-têtes stylisés et insertion de données.
+- **Endpoints FastAPI** : `/api/health`, `/api/categories`, téléversement d'images, exports Excel & ZIP.
+
+---
+
+## 🧭 Cartographie & Graphe de Connaissances (Graphify / Engram)
+
+Le codebase est indexé par **Graphify / Engram** pour naviguer dans l'architecture et les relations de code :
+
+```bash
+# Mettre à jour le graphe d'architecture
+graphify update .
+
+# Exporter le studio interactif
+graphify studio export .engram/studio
+```
+
+- 📊 **Rapport synthétique** : `.engram/GRAPH_REPORT.md`
+- 🌐 **Studio visuel hors-ligne** : Ouvrez `.engram/studio/studio.html` dans votre navigateur.
+
+---
+
 ## 📖 Guide d'Utilisation
 
 1. **Créer une Catégorie** : Entrez le nom de la catégorie (ex: `Gâteau d'anniversaire à 15000 FCFA`). Le prix est automatiquement extrait !
@@ -110,3 +142,4 @@ Accédez à l'application dans votre navigateur :
 ## 📄 Licence
 
 Développé sous licence MIT. Libre d'utilisation et de modification pour vos projets personnels ou commerciaux.
+

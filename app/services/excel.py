@@ -9,6 +9,49 @@ from app.config import CATALOGUE_FINAL_DIR
 
 EXCEL_PATH = CATALOGUE_FINAL_DIR / "catalogue_global.xlsx"
 
+def init_excel_workbook() -> openpyxl.Workbook:
+    """Creates a new openpyxl Workbook initialized with styled headers."""
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Catalogue Produits"
+    
+    headers = ["Catégorie", "Nom Fichier", "Prix", "Chemin d'Accès", "Date Traitement"]
+    ws.append(headers)
+    
+    header_fill = PatternFill(start_color="1F2937", end_color="1F2937", fill_type="solid")
+    header_font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+    header_alignment = Alignment(horizontal="center", vertical="center")
+    thin_border = Border(
+        left=Side(style='thin', color='D1D5DB'),
+        right=Side(style='thin', color='D1D5DB'),
+        top=Side(style='thin', color='D1D5DB'),
+        bottom=Side(style='medium', color='111827')
+    )
+    
+    for col_num in range(1, len(headers) + 1):
+        cell = ws.cell(row=1, column=col_num)
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = header_alignment
+        cell.border = thin_border
+    
+    ws.row_dimensions[1].height = 25
+    return wb
+
+def ensure_excel_registry_exists() -> Path:
+    """
+    Ensures that the catalogue_global.xlsx file exists with proper headers.
+    Returns the Path to the Excel file.
+    """
+    CATALOGUE_FINAL_DIR.mkdir(parents=True, exist_ok=True)
+    if not EXCEL_PATH.exists():
+        wb = init_excel_workbook()
+        # Default column widths
+        for col_letter in ["A", "B", "C", "D", "E"]:
+            wb.active.column_dimensions[col_letter].width = 20
+        wb.save(EXCEL_PATH)
+    return EXCEL_PATH
+
 def append_to_excel_registry(category_name: str, product_filename: str, file_path: str, price: str = "") -> str:
     """
     Appends a new processed product record to catalogue_final/catalogue_global.xlsx.
@@ -16,39 +59,12 @@ def append_to_excel_registry(category_name: str, product_filename: str, file_pat
     """
     CATALOGUE_FINAL_DIR.mkdir(parents=True, exist_ok=True)
     
-    file_exists = EXCEL_PATH.exists()
-    
-    if file_exists:
+    if EXCEL_PATH.exists():
         wb = openpyxl.load_workbook(EXCEL_PATH)
         ws = wb.active
     else:
-        wb = openpyxl.Workbook()
+        wb = init_excel_workbook()
         ws = wb.active
-        ws.title = "Catalogue Produits"
-        
-        # Write Headers with Prix column
-        headers = ["Catégorie", "Nom Fichier", "Prix", "Chemin d'Accès", "Date Traitement"]
-        ws.append(headers)
-        
-        # Style Header Row
-        header_fill = PatternFill(start_color="1F2937", end_color="1F2937", fill_type="solid")
-        header_font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
-        header_alignment = Alignment(horizontal="center", vertical="center")
-        thin_border = Border(
-            left=Side(style='thin', color='D1D5DB'),
-            right=Side(style='thin', color='D1D5DB'),
-            top=Side(style='thin', color='D1D5DB'),
-            bottom=Side(style='medium', color='111827')
-        )
-        
-        for col_num in range(1, len(headers) + 1):
-            cell = ws.cell(row=1, column=col_num)
-            cell.fill = header_fill
-            cell.font = header_font
-            cell.alignment = header_alignment
-            cell.border = thin_border
-        
-        ws.row_dimensions[1].height = 25
 
     # Append Data Row
     timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

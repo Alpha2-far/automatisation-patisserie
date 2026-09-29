@@ -1,9 +1,10 @@
 import sqlite3
 import re
 import unicodedata
+import shutil
 from datetime import datetime
 from typing import List, Dict, Any, Optional
-from app.config import DB_PATH, UPLOADS_BRUTS_DIR
+from app.config import DB_PATH, UPLOADS_BRUTS_DIR, CATALOGUE_FINAL_DIR
 
 def slugify(text: str) -> str:
     """Convert text to URL-safe slug stripping accents and special characters."""
@@ -38,8 +39,9 @@ def parse_price(text: str) -> tuple:
     return text.strip(), ""
 
 def get_db():
-    """Return a database connection with dict-like row factory."""
+    """Return a database connection with dict-like row factory and foreign keys enabled."""
     conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA foreign_keys = ON;")
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -161,10 +163,26 @@ def create_category(name: str, price: Optional[str] = None) -> Dict[str, Any]:
         }
 
 def delete_category_by_slug(slug: str):
+    """Delete a category by slug, cascading records and cleaning physical directory storage."""
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("DELETE FROM categories WHERE slug = ?;", (slug,))
         conn.commit()
+
+    # Clean up physical directory files for this category
+    raw_cat_dir = UPLOADS_BRUTS_DIR / slug
+    if raw_cat_dir.exists():
+        try:
+            shutil.rmtree(raw_cat_dir)
+        except Exception as e:
+            print(f"Warning: Could not remove directory {raw_cat_dir}: {e}")
+
+    final_cat_dir = CATALOGUE_FINAL_DIR / slug
+    if final_cat_dir.exists():
+        try:
+            shutil.rmtree(final_cat_dir)
+        except Exception as e:
+            print(f"Warning: Could not remove directory {final_cat_dir}: {e}")
 
 # --- Raw Upload Functions ---
 

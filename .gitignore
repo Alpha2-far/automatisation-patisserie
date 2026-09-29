@@ -39,3 +39,19 @@ _build_plan/
 .vscode/
 *.swp
 *.swo
+
+# Graphify & Engram caches
+**/.graphify/*
+!.graphify/GRAPH_REPORT.md
+!.graphify/graph.json
+**/.engram/*
+!.engram/GRAPH_REPORT.md
+!.engram/graph.json
+
+
+
+# Pytest & Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
