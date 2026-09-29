@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxPriceContainer = document.getElementById('lightbox-price-container');
   const lightboxPrice = document.getElementById('lightbox-price');
   const lightboxPath = document.getElementById('lightbox-path');
+  const btnDownloadProcessed = document.getElementById('btn-download-processed');
   const btnDeleteProcessed = document.getElementById('btn-delete-processed');
 
   // Category Modal Elements
@@ -345,6 +346,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const displayPrice = product.price || product.category_price || '-';
     if (lightboxPrice) lightboxPrice.textContent = displayPrice;
+
+    if (btnDownloadProcessed) {
+      btnDownloadProcessed.href = `/${product.file_path}`;
+      btnDownloadProcessed.download = product.product_name;
+    }
 
     lightboxPath.textContent = product.file_path;
     modalLightbox.classList.remove('hidden');

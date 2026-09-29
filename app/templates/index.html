@@ -270,12 +270,16 @@
           <p>Catégorie : <span id="lightbox-category" class="font-bold text-blue-600">---</span></p>
           <p id="lightbox-price-container" class="font-semibold text-emerald-600">Prix : <span id="lightbox-price">---</span></p>
           <p class="truncate">Fichier : <code id="lightbox-path" class="font-mono text-slate-400">---</code></p>
+        <div class="flex items-center gap-2 shrink-0">
+          <a id="btn-download-processed" href="#" download class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5" title="Télécharger cette photo">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Télécharger</span>
+          </a>
+          <button id="btn-delete-processed" class="px-3 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold shrink-0 transition-colors flex items-center gap-1" title="Supprimer de la galerie">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <span>Supprimer</span>
+          </button>
         </div>
-
-        <button id="btn-delete-processed" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shrink-0 shadow-sm transition-colors flex items-center gap-1">
-          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-          <span>Supprimer</span>
-        </button>
       </div>
     </div>
   </div>
